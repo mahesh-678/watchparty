@@ -620,6 +620,7 @@ io.on('connection', (socket: Socket) => {
 
 const frontendPath = path.resolve(
   process.cwd(),
+  '..',
   'frontend',
   'dist'
 );
