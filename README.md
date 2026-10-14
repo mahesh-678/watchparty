@@ -1,34 +1,120 @@
-# WatchParty
-A starter full-stack watch-party app with room creation, Socket.IO chat, participant lists, and host-controlled playback.
+# 🎬 WatchParty
 
-## Requirements
-Install Node.js 20 LTS or newer from https://nodejs.org/.
+### Watch Together. Anywhere. Anytime.
 
-## Run on Windows
-1. Extract the ZIP.
-2. Open the `watchparty` folder in VS Code.
-3. Open **Terminal → New Terminal**.
-4. Run these commands:
+WatchParty is a real-time web application that allows friends to watch
+videos together in synchronized playback sessions, communicate through
+live chat, and interact in shared virtual rooms.
 
-```powershell
-npm install
-npm run install:all
-npm run dev
-```
+The application synchronizes video playback between participants and
+provides room creation, room joining, participant tracking, and
+host-controlled playback.
 
-5. Open **http://localhost:5173** in your browser. Keep the terminal running.
+## 🌐 Live Demo
 
-## Test with two users
-1. Open the app in two browser windows (or normal + incognito).
-2. In the first, enter a username and create a room.
-3. Copy the room ID or invite link.
-4. In the second, enter a different username and join.
-5. The host loads a direct MP4/WebM URL or YouTube link. Test chat and participant updates.
+**Try WatchParty:** https://watchparty-e3jf.onrender.com/
 
-## Notes and limitations
-- Frontend: React + Vite; backend: Express + Socket.IO.
-- Rooms and chat are stored in memory and disappear when the server restarts.
-- Direct video URLs must allow browser playback. YouTube embeds are displayed, but playback synchronization for YouTube may be limited by iframe/player behavior; HTML5 direct-video synchronization is the primary implemented path.
-- Some browsers block autoplay; a viewer may need to press Play once.
-- The server synchronizes playback commands, not the video stream itself.
-- This is a demo starter, not production-hardened. Add persistent storage, rate limiting, authentication, and stronger abuse protection before public use.
+Open the website, enter your name, create a room, and share the room ID
+with your friends.
+
+> Note: The application uses Render's free hosting plan. The server may
+> take some time to respond after a period of inactivity.
+
+---
+
+## ✨ Features
+
+### 🏠 Room Management
+- Create a room with a unique room ID.
+- Join an existing room using its room ID.
+- Track participants currently in a room.
+- Automatically transfer host privileges when the host leaves.
+
+### 🎥 Synchronized Video Playback
+- Load supported YouTube videos and direct video URLs.
+- Synchronize playback between room participants.
+- Support play, pause, and seeking operations.
+- Restrict video loading and playback controls to the room host.
+
+### 💬 Real-Time Chat
+- Exchange messages with other participants.
+- Receive messages instantly using Socket.IO.
+- Display system messages when participants join or leave.
+- Maintain recent messages during an active room session.
+
+### 👥 Participant Management
+- Display room participants.
+- Identify the current host.
+- Update participant information when users join or disconnect.
+
+### 🌐 Web-Based Application
+- Access the application through a browser.
+- No separate desktop application is required.
+- Publicly accessible deployment for remote collaboration.
+
+---
+
+## 🛠️ Technologies Used
+
+### Frontend
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Socket.IO Client
+- Lucide React
+
+### Backend
+- Node.js
+- Express.js
+- TypeScript
+- Socket.IO
+- HTTP Server
+
+### Video Integration
+- YouTube embedded player
+- HTML5 video playback
+
+### Deployment and Version Control
+- Git
+- GitHub
+- Render
+
+---
+
+## 🏗️ Architecture
+
+WatchParty uses a client-server architecture.
+
+1. The React frontend provides the user interface.
+2. The Express backend serves the frontend and handles application
+   requests.
+3. Socket.IO maintains real-time communication between connected users.
+4. Room information tracks participants, messages, host privileges,
+   and playback state.
+5. Playback events are broadcast to participants in the same room.
+
+The frontend and backend are deployed together as a single web service.
+
+```text
+                  WATCHPARTY
+                       |
+          +------------+------------+
+          |                         |
+     React Frontend            Express Server
+     TypeScript                Node.js
+          |                         |
+          |                    Socket.IO
+          |                         |
+          +----------+--------------+
+                     |
+              Shared Watch Room
+                     |
+       +-------------+-------------+
+       |             |             |
+    Host/User      User 2        User 3
+       |             |             |
+    Playback       Playback       Playback
+    Controls       Sync           Sync
+       |
+    Real-Time Chat and Participants
