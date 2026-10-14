@@ -116,7 +116,7 @@ declare global {
 ------------------------------------------------------- */
 
 const SOCKET_URL =
-  import.meta.env.VITE_SERVER_URL || "http://localhost:3001";
+  import.meta.env.VITE_SERVER_URL || window.location.origin;
 
 const socket: Socket = io(SOCKET_URL, {
   autoConnect: true,
@@ -167,6 +167,22 @@ function getYouTubeId(url: string): string | null {
   }
 
   return null;
+}
+function getYouTubeTime(): number {
+  try {
+    const player = (window as any).youtubePlayer;
+
+    if (
+      player &&
+      typeof player.getCurrentTime === "function"
+    ) {
+      return player.getCurrentTime();
+    }
+  } catch (error) {
+    console.error("Could not get YouTube playback time:", error);
+  }
+
+  return 0;
 }
 
 function getVideoKind(url: string): "youtube" | "direct" {
