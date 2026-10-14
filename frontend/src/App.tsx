@@ -1372,7 +1372,7 @@ export default function App() {
                 <input
                   id="username"
                   type="text"
-                  placeholder="Enter your name(e.g. Mahesh"
+                  placeholder="Enter your name(e.g. MAHESH)"
                   value={username}
                   maxLength={24}
                   onChange={(event) => setUsername(event.target.value)}
